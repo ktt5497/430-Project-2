@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+//const fs = require('fs');
+//const path = require('path');
 const models = require('../models');
 
 const { Post } = models;
@@ -18,7 +18,7 @@ const getPosts = async (req, res) => {
   }
 };
 
-const makePost = async (req, res, next) => {
+const makePost = async (req, res) => {
   if (!req.body.text) {
     return res.status(400).json({ error: 'Write something to post!' });
   }
