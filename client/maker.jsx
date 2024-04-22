@@ -3,90 +3,93 @@ const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
-const handleDomo = (e, onDomoAdded) => {
+const handleUserPost = (e, onUserPostAdded) => {
     e.preventDefault();
     helper.hideError();
 
-    const name = e.target.querySelector('#domoName').value;
-    const age = e.target.querySelector('#domoAge').value;
-    const height = e.target.querySelector('#domoHeight').value;
+    const text = e.target.querySelector('#postText').value;
+    const fileInput = e.target.querySelector('#postFile');
+    const file = fileInput.files[0];
+    const likes = 0;
 
-    if(!name || !age || !height) {
-        helper.handleError('All fields are required');
+    console.log(fileInput); // Debugging statement
+    console.log(file); // Debugging statement
+
+    if(!text) {
+        helper.handleError('Write something to post!');
         return false;
     }
 
-    helper.sendPost(e.target.action, {name, age, height}, onDomoAdded);
+    helper.sendPost(e.target.action, {text, file, likes}, onUserPostAdded);
     return false;
 };
 
-const DomoForm = (props) => {
+const PostForm = (props) => {
     return (
-        <form action="/maker" 
-        id="domoForm"
-        onSubmit={(e)=> handleDomo(e, props.triggerReload)}
+        <form action="/createPost" 
+        id="postForm"
+        onSubmit={(e)=> handleUserPost(e, props.triggerReload)}
         method="POST"
-        className="domoForm">
-            <label htmlFor="name">Name: </label>
-            <input type="text" id="domoName" name="name" placeholder="Domo Name" />
-            <label htmlFor="age">Age: </label>
-            <input type="number" id="domoAge" min="0" name="age" />
-            <label htmlFor="height">Height: </label>
-            <input type="number" id="domoHeight" min="1" name="height" placeholder="measured in inches" />
-            <input className="makeDomoSubmit" type="submit" value="Make Domo"/>
+        className="postForm"
+        encType='multipart/form-data'>
+            <label htmlFor="text"></label>
+            <input type="text" id="postText" name="text" placeholder="Write whats on your mind..." />
+            <label htmlFor="image">Upload Image</label>
+            <input type="file" id="postFile" name="uploadFile" accept="image/*"></input>
+            <input className="makePostSubmit" type="submit" value="Upload Post"/>
         </form>
     );
 };
 
-const DomoList = (props) => {
-    const [domos, setDomos] = useState(props.domos);
+// const PostList = (props) => {
+//     const [posts, setPosts] = useState(props.posts);
 
-    useEffect(() => {
-        const loadDomosFromServer = async () => {
-            const response = await fetch('/getDomos');
-            const data = await response.json();
-            setDomos(data.domos);
-        };
-        loadDomosFromServer();
-    }, [props.reloadDomos]);
+//     useEffect(() => {
+//         const loadPostsFromServer = async () => {
+//             const response = await fetch('/getPosts');
+//             const data = await response.json();
+//             setPosts(data.posts);
+//         };
+//         loadPostsFromServer();
+//     }, [props.reloadPosts]);
 
-    if(domos.length === 0) {
-        return (
-            <div className="domoList">
-                <h3 className="emptyDomo">No Domos Yet!</h3>
-            </div>
-        );
-    }
+//     if(posts.length === 0) {
+//         return (
+//             <div className="postList">
+//                 <h3 className="emptyPost">Upload your first post!</h3>
+//             </div>
+//         );
+//     }
 
-    const domoNodes = domos.map(domo => {
-        return (
-            <div key={domo.id} className="domo">
-                <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
-                <h3 className="domoName">Name: {domo.name}</h3>
-                <h3 className="domoAge">Age: {domo.age}</h3>
-                <h3 className="domoHeight">Height: {domo.height}in</h3>
-            </div>
-        );
-    });
+//     //Displays post and maybe handle likes here??
+//     const postNodes = posts.map(post => {
+//         return (
+//             <div key={post.id} className="post">
+//                 <img src={post.img} alt="Post Image" className="postImage" />
+//                 <h3 className="postText">{post.text}</h3>
+//             </div>
 
-    return (
-        <div className="domoList">
-            {domoNodes}
-        </div>
-    );
-};
+//         );
+//     });
+
+//     return (
+//         <div className="postList">
+//             {postNodes}
+//         </div>
+//     );
+// };
 
 const App = () => {
-    const [reloadDomos, setReloadDomos] = useState(false);
+    const [reloadPosts, setReloadPosts] = useState(false);
 
     return (
         <div>
-            <div id="makeDomo">
-                <DomoForm triggerReload={() => setReloadDomos(!reloadDomos)} />
+            <div id="makePost">
+                <PostForm triggerReload={() => setReloadPosts(!reloadPosts)} />
             </div>
-            <div id="domos">
-                <DomoList domos={[]} reloadDomos={reloadDomos} />
-            </div>
+            {/* <div id="Posts">
+                <PostList Posts={[]} reloadPosts={reloadPosts} />
+            </div> */}
         </div>
     );
 };

@@ -11,11 +11,13 @@ const session = require('express-session');
 const RedisStore = require('connect-redis').default;
 const redis = require('redis');
 
+const fileUpload = require('express-fileupload');
+
 const router = require('./router.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
-const dbURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1/DomoMaker';
+const dbURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1/TeaWoa';
 mongoose.connect(dbURI).catch((err) => {
   if (err) {
     console.log('Could not connect to database');
@@ -32,6 +34,8 @@ redisClient.on('error', (err) => console.log('Redis Client Error', err));
 redisClient.connect().then(() => {
   const app = express();
 
+  app.use(fileUpload());
+
   app.use(helmet());
   app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted/`)));
   app.use(favicon(`${__dirname}/../hosted/img/favicon.png`));
@@ -44,7 +48,7 @@ redisClient.connect().then(() => {
     store: new RedisStore({
       client: redisClient,
     }),
-    secret: 'Domo Arigato',
+    secret: 'WoaKubPai SpillDaTea',
     resave: false,
     saveUninitialized: false,
   }));

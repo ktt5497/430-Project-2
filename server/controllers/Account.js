@@ -31,7 +31,7 @@ const verify = (req, res) => {
   });
 };
 
-const setNewPass = async(req, res) => {
+const setNewPass = async (req, res) => {
   const username = `${req.body.username}`;
   const newpass = `${req.body.newPass}`;
   const newpass2 = `${req.body.newPass2}`;
@@ -45,22 +45,21 @@ const setNewPass = async(req, res) => {
   }
 
   try {
-  const hash = await Account.generateHash(newpass);
-  // finds usernmae and updates password
-  const updatePass = await Account.findOneAndUpdate(
-    { username },
-    { $set: { password: hash } },
-    { new: true },
-  ).lean().exec();
+    const hash = await Account.generateHash(newpass);
+    // finds usernmae and updates password
+    const updatePass = await Account.findOneAndUpdate(
+      { username },
+      { $set: { password: hash } },
+      { new: true },
+    ).lean().exec();
 
-  if (!updatePass) {
-    return res.status(404).json({ error: 'User not found.' });
-  }
+    if (!updatePass) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
 
-  return res.json({ redirect: '/login' });
-
+    return res.json({ redirect: '/login' });
   } catch (err) {
-    return res.status(400).json({ error: 'something went wrong' })
+    return res.status(400).json({ error: 'something went wrong' });
   }
 };
 
@@ -79,7 +78,7 @@ const login = (req, res) => {
 
     req.session.account = Account.toAPI(account);
 
-    return res.json({ redirect: '/maker' });
+    return res.json({ redirect: '/createPost' });
   });
 };
 
@@ -104,7 +103,7 @@ const signup = async (req, res) => {
     const newAccount = new Account({ username, password: hash, dOb });
     await newAccount.save();
     req.session.account = Account.toAPI(newAccount);
-    return res.json({ redirect: '/maker' });
+    return res.json({ redirect: '/createPost' });
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {
