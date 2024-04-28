@@ -1,24 +1,66 @@
-<html lang="en">
+<html lang="en" class="theme-light">
 <head>
   <meta charset="utf-8"/>
-  <title>DomoMaker</title>
+  <title>MemoryBoard</title>
   <link rel="shortcut icon" href="/assets/img/favicon.png"/>
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
+>
 </head>
 <body>
-  <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
-    <div class="navlink"><a href="/logout">Log out</a></div>
-  </nav>
+  <script src="/assets/BulmaModal.js"></script>
+  <section class="columns">
 
-  <section id="app">
+    <div class="column is-3 section is-sticky">
+      <aside class="menu">
+        <p class="menu-label is-hidden-touch"></p>
+        <ul class="menu-list">
+          <li>
+            <button class="js-modal-trigger" data-target="modal-Uploader">
+              Upload
+            </button>
+          </li>
+          <li>
+            <a href="/" class="">
+              <span class="icon"><i class="fa fa-home"></i></span> Home
+            </a>
+          </li>
+          <li>
+            <a href="#" class="">
+              <span class="icon"><i class="fa fa-info"></i></span> Profile
+            </a>
+          </li>
+          <li>
+            <a href="#" class="">
+              <span class="icon"><i class="fa fa-home"></i></span> Prenium
+            </a>
+          </li>
+          <li>
+            <a href="/logout" id="logout">
+              <span class="icon"><i class="fa fa-info"></i></span> Log Out
+            </a>
+          </li>
+        </ul>
+      </aside>
+      
+    </div>
 
+    <div class="column is-6">
+      <section id="app">
+      </section>
+    </div>
+
+    <div class="column is-2 section">
+      <section class="friends">
+        <p>No friends</p>
+      </section>
+    </div>
+ 
   </section>
 
-  <div id="domoMessage" class='hidden'>
-    <img id="speech" src="/assets/img/speech.png" alt="speech box"/>
-    <h3><span id="errorMessage"></span></h3>
-    <img id="domo" src="assets/img/domo.png" alt="domo"/>
-  </div>
   <script src="/assets/appBundle.js"></script>
+
 </body>
 </html>

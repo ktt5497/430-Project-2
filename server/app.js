@@ -15,7 +15,7 @@ const fileUpload = require('express-fileupload');
 
 const router = require('./router.js');
 
-const port = process.env.PORT || process.env.NODE_PORT || 3000;
+const port = process.env.PORT || process.env.NODE_PORT || 3000 || 5000;
 
 const dbURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1/TeaWoa';
 mongoose.connect(dbURI).catch((err) => {
