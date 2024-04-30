@@ -79,14 +79,52 @@ const makePost = async (req, res) => {
   }
 };
 
+// deleting post
 const deletePost = async (req, res) => {
   try {
-    await Post.findByIdAndDelete({ _id: req.params.id });
-    console.log('Post deleted:', req.params.id);
+    await Post.findByIdAndDelete({ _id: req.query.id });
+    console.log('Post deleted:', req.query.id);
     res.status(200).json({ message: 'Post deleted successfully' });
   } catch (err) {
     console.error('Error deleting post:', err);
     res.status(500).json({ error: 'An error occurred deleting the post' });
+  }
+};
+
+// editing Post
+const editPost = async (req, res) => {
+  const newText = req.body.text;
+  const { file } = req.files;
+  const postId = req.query.id;
+
+  try {
+    if (!newText) {
+      return res.status(400).json({ error: 'Write something to post! And include date!' });
+    }
+
+    if (!file) {
+      return res.status(400).json({ error: 'No Files were uploaded' });
+    }
+
+    // Check if postId is valid (optional)
+    if (!postId) {
+      return res.status(400).json({ error: 'Invalid post ID' });
+    }
+
+    const newFile = new File(file);
+    const updatePost = await Post.findOneAndUpdate(
+      { _id: postId },
+      { $set: { text: newText, fileID: newFile } },
+      { new: true },
+    ).lean().exec();
+
+    if (!updatePost) {
+      return res.status(404).json({ error: 'Post not found.' });
+    }
+
+    return res.status(200).json({ message: 'Updated successfully' });
+  } catch (err) {
+    return res.status(400).json({ error: 'something went wrong' });
   }
 };
 
@@ -96,4 +134,5 @@ module.exports = {
   getPosts,
   retrieveFile,
   deletePost,
+  editPost,
 };

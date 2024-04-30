@@ -13,7 +13,8 @@ const router = (app) => {
   app.get('/getPosts', mid.requiresLogin, controllers.Post.getPosts);
   app.get('/retrieve', mid.requiresLogin, controllers.Post.retrieveFile);
   app.post('/createPost', mid.requiresLogin, controllers.Post.makePost);
-  app.post('/delete/:id', mid.requiresLogin, controllers.Post.deletePost);
+  app.post('/delete', mid.requiresLogin, controllers.Post.deletePost);
+  app.post('/edit', mid.requiresLogin, controllers.Post.editPost);
 
   // Account Thing(To log in and sign up)
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);

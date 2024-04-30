@@ -32,13 +32,29 @@ const SetNewPassWindow = (props) => {
             action="/setNewPassword"
             method='POST'
             className="mainForm">
-                <label htmlFor="username">Username: </label>
-                <input type="username" id="user" name="username" value={sessionStorage.getItem('username')} disabled />
-                <label htmlFor="newPass">New Password: </label>
-                <input type="password" id="newPass" name="newPass" placeholder="New password" />
-                <label htmlFor="newPass2">Confirm Password: </label>
-                <input type="password" id="newPass2" name="newPass2" placeholder="Retype new password" />
-                <input className="formSubmit" type="submit" value="Set New Password" />
+                <div className="columns is-centered">
+                    <div className="column is-half is-offset-one-quarter">
+                        <div class="fixed-grid has-1-cols">
+                                <div class="grid">
+                                    <div class="cell text-is-centered pl-1">
+                                        <label htmlFor="username">Username: </label>
+                                        <input class="input" type="username" id="user" name="username" value={sessionStorage.getItem('username')} disabled />
+                                    </div>
+                                    <div class="cell text-is-centered pl-1">
+                                        <label htmlFor="newPass">New Password: </label>
+                                        <input class="input" type="password" id="newPass" name="newPass" placeholder="New password" />
+                                    </div>
+                                    <div class="cell text-is-centered pl-1">
+                                        <label htmlFor="newPass2">Confirm Password: </label>
+                                        <input class="input" type="password" id="newPass2" name="newPass2" placeholder="Retype new password" />
+                                    </div>
+                                    <div class="cell">
+                                    <input className="button" type="submit" value="Set New Password" />
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
             </form>
     );
 };

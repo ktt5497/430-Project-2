@@ -1,16 +1,17 @@
-// const helper = require('./helper.js');
+const helper = require('./helper.js');
 const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
 const handleUserPost = async (e, onUserPostAdded) => {
     e.preventDefault();
-    // helper.hideError();
+    helper.hideError();
 
     const text = e.target.querySelector('#postText').value;
+    const file = e.target.querySelector('#postFile').value;
 
-    if(!text) {
-        helper.handleError('Write something to post!');
+    if(!text || !file) {
+        helper.handleError('Write something to post and also choose a photo to upload!');
         return false;
     }
     const response = await fetch('/createPost',
@@ -23,6 +24,7 @@ const handleUserPost = async (e, onUserPostAdded) => {
     return false;
 };
 
+
 const PostForm = (props) => {
 
     const handleFormSubmit = async (e) => {
@@ -30,74 +32,132 @@ const PostForm = (props) => {
         // Call the handleUserPost function to handle form submission
         await handleUserPost(e, props.triggerReload);
         // Close the modal after form submission
-        props.onModalClose(); // Call the callback function passed from the parent component
+        props.onModalClose();
     };
 
     return (
-        <aside class="menu">
-        <p class="menu-label">Upload</p>
-        <form action="/createPost" 
-        id="postForm"
-        onSubmit={ handleFormSubmit }
-        method="POST"
-        className="postForm"
-        encType='multipart/form-data'>
-            <label htmlFor="text"></label>
-            <input type="text" id="postText" name="text" placeholder="Write whats on your mind..." />
-            <label htmlFor="image">Upload Image</label>
-            <input type="file" id="postFile" name="file"></input>
-            <input className="makePostSubmit" type="submit" value="Upload Post"/>
-        </form>
-        </aside>
+        <div>
+            <aside class="menu">
+            <p class="menu-label">Upload</p>
+            <form action="/createPost" 
+            id="postForm"
+            onSubmit={ handleFormSubmit }
+            method="POST"
+            className="postForm"
+            encType='multipart/form-data'>
+                <label htmlFor="text"></label>
+                <input type="text" id="postText" name="text" placeholder="Write whats on your mind..." />
+                <label htmlFor="image">Upload Image</label>
+                <input type="file" id="postFile" name="file"></input>
+                <input className="makePostSubmit" type="submit" value="Upload Post"/>
+            </form>
+            </aside>
+            <div id="eMessage" class='hidden'>
+                <h3><span id="errorMessage"></span></h3>
+            </div>
+        </div>
     );
 };
 
-// const OptionsModal = (props) => {
-//     const handleDelete = async (e) => {
-//         try {
-//             const response = await fetch(`delete/${props.Id}`, {
-//                 method: 'POST',
-//             });
-//             if (response.ok) {
-//                 e.preventDefault();
-//                 props.triggerReload();
-//                 props.onModalClose();
-//                 console.log('Post deleted successfully');
-//             } else {
-//                 console.error('Failed to delete post');
-//             }
-//         } catch (err) {
-//             console.log(err);
-//         }
-//     }
-//     return (
-//         <div>
-//             <button class="js-modal-trigger" data-target="post-options-modal">
-//                 <p className="is-size-4">...</p>
-//             </button>
-//             <Modal id="post-options-modal">
-//                     <aside class="menu">
-//                         <p class="menu-label">Options</p>
-//                         <ul class="menu-list">
-//                             {/* Delete button */}
-//                             <li>
-//                                 <button type="button" onClick={handleDelete}>
-//                                     <p className="has-text-danger">Delete</p>
-//                                 </button>
-//                             </li>
-//                             {/* Edit button */}
-//                         <li><form><button>Edit</button></form></li>
-//                     </ul>
-//                 </aside>
-//             </Modal>
-//         </div>
+const handleEditPost = async (e, onUserPostAdded) => {
+    e.preventDefault();
+    helper.hideError();
+
+    const text = e.target.querySelector('#editText').value;
+    const fileInput = e.target.querySelector('#editFile').value;
+    const file = fileInput.files[0];
+
+    if(!text) {
+        helper.handleError('Write something to post!');
+        return false;
+    }
+
+    const formData = new FormData();
+    formData.append('text', text);
+    formData.append('file', file);
+
+    const response = await fetch(`/edit?id=${e.target.id}`,
+    {
+        method: 'POST',
+        body: formData,
+    });
+
+    onUserPostAdded();
+    return false;
+};
+
+//Editing Form (to change existing post)
+const PostEdit = (props) => {
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+        await handleEditPost(e, props.triggerReload);
+        // Close the modal after form submission
+        props.onModalClose();
+    };
+
+    return (
+        <form action="/edit" 
+            id="editForm"
+            onSubmit={ handleFormSubmit }
+            method="POST"
+            className="editForm"
+            encType='multipart/form-data'>
+            <label htmlFor="text"></label>
+            <input type="text" id="editText" name="text" placeholder="Write whats on your mind..." />
+            <label htmlFor="image">Change Image</label>
+            <input type="file" id="editFile" name="file"></input>
+            <input className="makeEditSubmit" type="submit" value="Edit Post"/>
+        </form>
+    );
+};
+
+//Options modal; user can choose to click delete or edit the post
+const OptionsModal = (props) => {
+    const handleDelete = async (e, id) => {
+        try {
+            const response = await fetch(`delete?id=${id}`, {
+                method: 'POST',
+            });
+            if (response.ok) {
+                e.preventDefault();
+                // props.triggerReload();
+                // props.onModalClose();
+                console.log('Post deleted successfully');
+            } else {
+                console.error('Failed to delete post');
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    return (
+        <div>
+            <Modal id="post-options">
+                    <aside class="menu">
+                        <p class="menu-label">Delete</p>
+                        <ul class="menu-list">
+                            {/* Delete button */}
+                            <li>
+                                <button type="button" onClick={(e) => handleDelete(e, props.Id)}>
+                                    <p className="has-text-danger">Delete</p>
+                                </button>
+                            </li>
+                        <p class="menu-label">Edit</p>
+                        <li>
+                            <PostEdit />
+                        </li>
+                    </ul>
+                </aside>
+            </Modal>
+        </div>
         
-//     )
-// }
+    )
+}
 //Displays and gets the list of post in MongoDB
 const PostList = (props) => {
     const [posts, setPosts] = useState(props.posts);
 
+    //loading the data for text, fils, and date
     useEffect(() => {
         const loadPostsFromServer = async () => {
             const response = await fetch('/getPosts');
@@ -137,7 +197,10 @@ const PostList = (props) => {
                                         </div>
                                     </div>
                                     <div className="column is-narrow pr-5">
-                                        
+                                    <button class="js-modal-trigger" data-target="post-options">
+                                        <p className="is-size-4">...</p>
+                                    </button>
+                                    <OptionsModal Id={post._id}/>
                                     </div>
                                 </div>
                                 <div class="content">
@@ -158,7 +221,8 @@ const PostList = (props) => {
     );
 };
 
-//Used the Bulma starter code to make the button to work.
+//This is creating the modal. It also keeps track when the modal is being closed or opened.
+//Edit here to make it select the selected modal.
 const Modal = ({ id, children }) => {
     const [isActive, setIsActive] = useState(false);
   
@@ -171,6 +235,7 @@ const Modal = ({ id, children }) => {
         });
       };
   
+      //targets the specific modal to close
       document.querySelectorAll('.js-modal-trigger').forEach((trigger) => {
         const modalId = trigger.dataset.target;
         const targetModal = document.getElementById(modalId);
@@ -184,6 +249,7 @@ const Modal = ({ id, children }) => {
         close.addEventListener('click', () => closeModal(targetModal));
       });
   
+      //user can use esc to close modal
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
           closeAllModals();
@@ -209,6 +275,7 @@ const Modal = ({ id, children }) => {
       };
     }, []);
   
+    //returning modal
     return (
       <div id={id} className={`modal ${isActive ? 'is-active' : ''}`}>
         <div className="modal-background"></div>
@@ -242,6 +309,7 @@ const App = () => {
                     onModalClose={closeModal} // Pass the closeModal function as a prop
                 />
             </Modal>
+
         </div>
     );
 };

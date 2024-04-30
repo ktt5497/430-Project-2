@@ -1,10 +1,10 @@
-/* html, body {
+html, body {
     height: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-} */
+}
 /* 
 nav {
     width: 100%;
@@ -61,7 +61,7 @@ nav {
     border-radius: 0px !important;
 }
 
-.mainForm {
+/* .mainForm {
     height: 300px;
     width: 350px;
     margin: 0 auto;
@@ -111,16 +111,16 @@ nav {
     padding: 3px 0px;
     color: white;
     text-decoration: none;
-}
+} */
 
 .formSubmit:link, .formSubmit:visited, .formSubmit:hover, .formSubmit:active, .formVerify:link, .formVerify:visited, .formVerify:hover, .formVerify:active {
     color: white;
 }
 
-.formSubmit:hover, .formVerify:hover {
+/* .formSubmit:hover, .formVerify:hover {
     transition: background-color 0.4s ease;
     background-color: #338acc;
-}
+} */
 
 #user, #pass, #pass2, #newPass, #newPass2 {
     text-align: center;
@@ -139,4 +139,6 @@ nav {
     font-weight: bold;
     color: red;
     font-style: italic;
+    display: table;
+    margin: 0 auto;
 }

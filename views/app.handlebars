@@ -10,7 +10,7 @@
 >
 </head>
 <body>
-  <script src="/assets/BulmaModal.js"></script>
+  {{!-- <script src="/assets/BulmaModal.js"></script> --}}
   <section class="columns">
 
     <div class="column is-3 section is-sticky">
@@ -24,22 +24,27 @@
           </li>
           <li>
             <a href="/" class="">
-              <span class="icon"><i class="fa fa-home"></i></span> Home
+              <span class="icon-text">
+                <span class="icon">
+                  <i class="fas fa-home"></i>
+                </span>
+                  <span>Home</span>
+              </span>
             </a>
           </li>
           <li>
             <a href="#" class="">
-              <span class="icon"><i class="fa fa-info"></i></span> Profile
+              <span class="icon"><i class="fas fa-info"></i></span> Profile
             </a>
           </li>
           <li>
             <a href="#" class="">
-              <span class="icon"><i class="fa fa-home"></i></span> Prenium
+              <span class="icon"><i class="fas fa-home"></i></span> Prenium
             </a>
           </li>
           <li>
             <a href="/logout" id="logout">
-              <span class="icon"><i class="fa fa-info"></i></span> Log Out
+              <span class="icon"><i class="fas fa-info"></i></span> Log Out
             </a>
           </li>
         </ul>
@@ -59,6 +64,10 @@
     </div>
  
   </section>
+
+  <div id="eMessage" class='hidden'>
+    <h3><span id="errorMessage"></span></h3>
+  </div>
 
   <script src="/assets/appBundle.js"></script>
 

@@ -71,11 +71,25 @@ const VerificationWindow = (props) => {
             action="/verification"
             method='POST'
             className="mainForm">
-                <label htmlFor="username">Username: </label>
-                <input type="text" id="user" name="username" placeholder="username" />
-                <label htmlFor="dateOfbirth">Date of Birth: </label>
-                <input type="date" id="dOb2" name="dOb" />
-                <input className="formVerify" type="submit" value="Verify to Set New Password" />
+                <div className="columns is-centered">
+                    <div className="column is-half is-offset-one-quarter">
+                        <div class="fixed-grid has-1-cols">
+                                <div class="grid">
+                                    <div class="cell text-is-centered">
+                                        <label htmlFor="username">Username: </label>
+                                        <input class="input" type="text" id="user" name="username" placeholder="username" />
+                                    </div>
+                                    <div class="cell text-is-centered pl-1">
+                                        <label htmlFor="dateOfbirth">Date of Birth: </label>
+                                        <input type="date" id="dOb2" name="dOb" />
+                                    </div>
+                                    <div class="cell pl-6">
+                                    <input className="button" type="submit" value="Verify to Set New Password" />
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
             </form>
     );
 };
@@ -89,11 +103,26 @@ const LoginWindow = (props) => {
             method="POST"
             className="mainForm"
             >
-                <label htmlFor="username">Username: </label>
-                <input type="text" id="user" name="username" placeholder="username" />
-                <label htmlFor="pass">Password: </label>
-                <input type="password" id="pass" name="pass" placeholder="password" />
-                <input className="formSubmit" type="submit" value="Sign in" />
+                <p className="is-size-4 has-text-centered pb-3">MemoryBoard</p>
+                <div className="columns is-centered">
+                    <div className="column is-half is-offset-one-quarter">
+                        <div class="fixed-grid has-1-cols">
+                                <div class="grid">
+                                    <div class="cell text-is-centered">
+                                        <label htmlFor="username">Username: </label>
+                                        <input class="input" type="text" id="user" name="username" placeholder="Username" />
+                                    </div>
+                                    <div class="cell text-is-centered pl-1">
+                                        <label htmlFor="pass">Password: </label>
+                                        <input class="input" type="Password" id="pass" name="pass" placeholder="Password" />
+                                    </div>
+                                    <div class="cell pl-6 ml-6">
+                                        <input className="button" type="submit" value="Sign in" />
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
             </form>
     );
 };
@@ -107,15 +136,33 @@ const SignupWindow = (props) => {
             method="POST"
             className="mainForm"
             >
-                <label htmlFor="username">Username: </label>
-                <input type="text" id="user" name="username" placeholder="username" />
-                <label htmlFor="pass">Password: </label>
-                <input type="password" id="pass" name="pass" placeholder="password" />
-                <label htmlFor="pass2">Password: </label>
-                <input type="password" id="pass2" name="pass2" placeholder="retype password" />
-                <label htmlFor='dateOfbirth'>Date of Birth: </label>
-                <input type="date" id="dOb" name="dOb" />
-                <input className="formSubmit" type="submit" value="Sign up" />
+                <div className="columns is-centered">
+                    <div className="column is-half is-offset-one-quarter">
+                        <div class="fixed-grid has-1-cols">
+                                <div class="grid">
+                                    <div class="cell text-is-centered">
+                                        <label htmlFor="username">Username: </label>
+                                        <input class="input" type="text" id="user" name="username" placeholder="username" />
+                                    </div>
+                                    <div class="cell text-is-centered pl-1">
+                                        <label htmlFor="pass">Password: </label>
+                                        <input class="input" type="password" id="pass" name="pass" placeholder="password" />
+                                    </div>
+                                    <div class="cell text-is-centered pl-1">
+                                        <label htmlFor="pass2">Password: </label>
+                                        <input class="input" type="password" id="pass2" name="pass2" placeholder="retype password" />
+                                    </div>
+                                    <div class="cell text-is-centered pl-1">
+                                        <label htmlFor='dateOfbirth'>Date of Birth: </label>
+                                        <input type="date" id="dOb" name="dOb" />
+                                    </div>
+                                    <div class="cell pl-6 ml-6">
+                                        <input className="button" type="submit" value="Sign up" />
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
             </form>
     );
 };
@@ -129,18 +176,21 @@ const init = () => {
 
     loginButton.addEventListener('click', (e) => {
         e.preventDefault();
+        helper.hideError();
         root.render( <LoginWindow /> );
         return false;
     });
 
     signupButton.addEventListener('click', (e) => {
         e.preventDefault();
+        helper.hideError();
         root.render( <SignupWindow /> );
         return false;
     });
 
     forgotpassButton.addEventListener('click', (e) => {
         e.preventDefault();
+        helper.hideError();
         root.render( <VerificationWindow /> );
         return false;
     });

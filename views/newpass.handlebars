@@ -2,23 +2,31 @@
 <head>
   <meta charset="utf-8"/>
   <title>MemoryBoard</title>
-  <link rel="shortcut icon" href="/assets/img/favicon.png"/>
+  {{!-- <link rel="shortcut icon" href="/assets/img/favicon.png"/> --}}
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
+>
+
 </head>
 <body> 
-  <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
-    <div class="navlink"><a id="loginButton" href="/login">Login</a></div>
-    <div class="navlink"><a id="forgotpassButton" href="/forgotpass">Forgot Password?</a></div>
+  <nav class="level">
+    <div class="level-item">
+    <a id="loginButton" href="/login">
+        <figure class="image is-128x128 is-centered">
+          <img id="logo" src="/assets/img/polaroid2.png" alt="camera logo"/>
+        </figure>
+      </a>
+    </div>
   </nav>
   
   <section id="content2">
 
   </section>
 
-  <div id="domoMessage" class='hidden'>
-    <img id="speech" src="/assets/img/speech.png" alt="speech box"/>
+  <div id="eMessage" class='hidden'>
     <h3><span id="errorMessage"></span></h3>
-    <img id="domo" src="assets/img/domo.png" alt="domo"/>
   </div>
   <script src="/assets/newPassBundle.js"></script>
 </body>
