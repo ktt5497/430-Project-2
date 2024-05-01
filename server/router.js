@@ -16,6 +16,10 @@ const router = (app) => {
   app.post('/delete', mid.requiresLogin, controllers.Post.deletePost);
   app.post('/edit', mid.requiresLogin, controllers.Post.editPost);
 
+  // Premium Monetization
+  app.get('/premium', mid.requiresLogin, controllers.Money.premiumPage);
+  app.post('/premium', mid.requiresLogin, controllers.Money.premiumBought);
+
   // Account Thing(To log in and sign up)
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);
@@ -25,6 +29,9 @@ const router = (app) => {
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
+
+  // Not found page
+  app.get('*', mid.requiresSecure, controllers.Error.errorPage);
 };
 
 module.exports = router;

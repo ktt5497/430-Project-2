@@ -31,6 +31,7 @@ const verify = (req, res) => {
   });
 };
 
+// Setting the new password
 const setNewPass = async (req, res) => {
   const username = `${req.body.username}`;
   const newpass = `${req.body.newPass}`;
@@ -63,6 +64,7 @@ const setNewPass = async (req, res) => {
   }
 };
 
+// User login
 const login = (req, res) => {
   const username = `${req.body.username}`;
   const pass = `${req.body.pass}`;
@@ -82,6 +84,7 @@ const login = (req, res) => {
   });
 };
 
+// User signup
 const signup = async (req, res) => {
   const username = `${req.body.username}`;
   const pass = `${req.body.pass}`;

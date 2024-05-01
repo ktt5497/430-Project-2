@@ -2,15 +2,16 @@
 <head>
   <meta charset="utf-8"/>
   <title>MemoryBoard</title>
-  <link rel="shortcut icon" href="/assets/img/favicon.png"/>
+  {{!-- <link rel="shortcut icon" href="/assets/img/favicon.png"/> --}}
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
   <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"
 />
+
 </head>
-<body>
-  {{!-- <script src="/assets/BulmaModal.js"></script> --}}
+<body> 
+  
   <section class="columns has-background-dark">
     <div class="column is-3 section is-sticky has-background-white">
       <a class="has-text-centered" href="/">
@@ -22,13 +23,6 @@
       <aside class="menu">
         <p class="menu-label is-hidden-touch"></p>
         <ul class="menu-list">
-          <li class="has-text-centered p-4">
-            <span class="icon-text">
-                  <button class="js-modal-trigger" data-target="modal-Uploader">
-                    <span class="solar--camera-add-broken"></span>
-                  </button>
-              </span>
-          </li>
           <li>
             <a href="/createPost" class="has-text-left p-4">
               <span class="icon-text">
@@ -65,38 +59,14 @@
     </div>
 
     <div class="column is-6">
-      <section id="app">
-      </section>
+      <section id="content3"></section>
     </div>
-
-    <div class="column is-3 section p-6">
-      <article class="panel is-warning">
-        <p class="panel-heading">Friends</p>
-        <p class="panel-tabs has-background-white">
-          <a class="is-active">Friends</a>
-          <a>Add Friends</a>
-        </p>
-        <div class="panel-block has-background-white">
-          <p class="control has-icons-left">
-            <input class="input is-link" type="text" placeholder="Search" />
-            <span class="icon is-left">
-              <span class="mingcute--user-search-fill"></span>
-            </span>
-          </p>
-        </div>
-        <a class="panel-block is-active has-background-white">
-          No Friends....
-        </a>
-      </article>
-    </div>
- 
   </section>
+  
 
   <div id="eMessage" class='hidden'>
     <h3><span id="errorMessage"></span></h3>
   </div>
-
-  <script src="/assets/appBundle.js"></script>
-
+  <script src="/assets/newPassBundle.js"></script>
 </body>
 </html>

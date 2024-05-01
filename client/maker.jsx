@@ -36,7 +36,7 @@ const PostForm = (props) => {
     };
 
     return (
-        <div>
+        <div className='p-5'>
             <aside class="menu">
             <p class="menu-label">Upload</p>
             <form action="/createPost" 
@@ -46,10 +46,16 @@ const PostForm = (props) => {
             className="postForm"
             encType='multipart/form-data'>
                 <label htmlFor="text"></label>
-                <input type="text" id="postText" name="text" placeholder="Write whats on your mind..." />
-                <label htmlFor="image">Upload Image</label>
-                <input type="file" id="postFile" name="file"></input>
-                <input className="makePostSubmit" type="submit" value="Upload Post"/>
+                <input className="textarea" type="text" id="postText" name="text" placeholder="Write whats on your mind..." />
+                <div className='pt-4'>
+                    <label className="pr-3" htmlFor="image">Upload Image:</label>
+                    <input type="file" id="postFile" name="file"></input>
+                </div>
+                
+                <div className="pt-4">
+                    <input className="button" type="submit" value="Upload Post"/>
+                </div>
+                
             </form>
             </aside>
             <div id="eMessage" class='hidden'>
@@ -103,10 +109,12 @@ const PostEdit = (props) => {
             className="editForm"
             encType='multipart/form-data'>
             <label htmlFor="text"></label>
-            <input type="text" id="editText" name="text" placeholder="Write whats on your mind..." />
-            <label htmlFor="image">Change Image</label>
-            <input type="file" id="editFile" name="file"></input>
-            <input className="makeEditSubmit" type="submit" value="Edit Post"/>
+            <input className="textarea" type="text" id="editText" name="text" placeholder="Update..." />
+            <div className='pt-4'>
+                    <label className="pr-3" htmlFor="image">Change Image:</label>
+                    <input type="file" id="editFile" name="file"></input>
+                </div>
+            <input className="button" type="submit" value="Edit Post"/>
         </form>
     );
 };
@@ -169,9 +177,12 @@ const PostList = (props) => {
 
     if(posts.length === 0) {
         return (
-            <div className="postList">
-                <h3 className="emptyPost">Upload your first post!</h3>
-            </div>
+            <section className="hero is-fullheight">
+                <div className="hero-body">
+                    <p className="has-text-centered is-size-1 has-text-success-light">Upload your first post...</p>
+                </div>
+            </section>
+            
         );
     }
 
@@ -179,13 +190,13 @@ const PostList = (props) => {
     const postNodes = posts.map(post => {
         return (
             <div>
-                <div className="columns is-centered">
+                <div className="columns is-centered p-6">
                     <div className="column is-three-fifths">
                         <div className="card has-no-rounded">
                             <div key={post._id} className="post">
                                 <div className="card-image p-3 m-3">
-                                    <figure className="image is-3by3">
-                                        <img src={`/retrieve?_id=${post.fileID}`} />
+                                    <figure className="image is-1by1">
+                                        <img className="has-no-rounded" src={`/retrieve?_id=${post.fileID}`} />
                                     </figure>
                                 </div>
                                 <div className="columns pl-5 pr-5">
