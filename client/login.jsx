@@ -2,6 +2,7 @@ const helper = require('./helper.js');
 const React = require('react');
 const {createRoot} = require('react-dom/client');
 
+//Verifies user to change password
 const handleVerify = (e) => {
     e.preventDefault();
     helper.hideError();
@@ -21,6 +22,7 @@ const handleVerify = (e) => {
     return false;
 };
 
+//Handles user login
 const handleLogin = (e) => {
     e.preventDefault();
     helper.hideError();
@@ -37,6 +39,7 @@ const handleLogin = (e) => {
     return false;
 }
 
+//Handles user sign up
 const handleSignup = (e) => {
     e.preventDefault();
     helper.hideError();
